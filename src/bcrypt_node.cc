@@ -4,7 +4,23 @@
 #include <cstring>
 #include <vector>
 #include <stdlib.h> // atoi
-#include <sys/types.h>
+
+#ifdef _MSC_VER
+#include <limits.h>
+#include <stddef.h>
+
+#if SIZE_MAX == UINT_MAX
+typedef int ssize_t;        /* common 32 bit case */
+#elif SIZE_MAX == ULONG_MAX
+typedef long ssize_t;       /* linux 64 bits */
+#elif SIZE_MAX == ULLONG_MAX
+typedef long long ssize_t;  /* windows 64 bits */
+#elif SIZE_MAX == USHRT_MAX
+typedef short ssize_t;
+#else
+#error platform has exotic SIZE_MAX
+#endif
+#endif // _MSC_VER
 
 #include "node_blf.h"
 
